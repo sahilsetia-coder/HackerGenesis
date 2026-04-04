@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HackerGenesis | Transcend Reality</title>
+    <title>HackerGenesis | Transcend the Code</title>
     
-    <meta name="description" content="HackerGenesis: The ultimate hackathon for the next generation of innovators.">
-    <meta name="theme-color" content="#0a0a0c">
+    <meta name="description" content="HackerGenesis: The ultimate 48-hour CSE hackathon.">
+    <meta name="theme-color" content="#050507">
 
     <style>
         /* ========================================
-        1. CSS VARIABLES & CORE SETUP
+        1. THEME VARIABLES & CORE CSS
         ========================================
         */
         :root {
@@ -19,9 +19,10 @@
             --accent: #f093fb;
             --bg-dark: #050507;
             --bg-card: rgba(255, 255, 255, 0.03);
-            --border-glow: rgba(0, 242, 254, 0.3);
-            --text-main: #e0e0e0;
+            --border-glow: rgba(0, 242, 254, 0.2);
+            --text-main: #ffffff;
             --text-dim: #a0a0a0;
+            --glass: rgba(10, 10, 12, 0.85);
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -41,16 +42,16 @@
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
         /* ========================================
-        2. BACKGROUND VISUALIZATION (CANVAS)
+        2. VISUALIZATION CANVAS (NEURAL NET)
         ========================================
         */
-        #hero-canvas {
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -61,50 +62,50 @@
         }
 
         /* ========================================
-        3. NAVIGATION
+        3. NAVIGATION (MOBILE OPTIMIZED)
         ========================================
         */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px;
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
             z-index: 1000;
-            background: rgba(5, 5, 7, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 900;
-            letter-spacing: -1px;
+            letter-spacing: 1px;
             background: linear-gradient(to right, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            cursor: pointer;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 25px;
         }
 
         .nav-links a {
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
             transition: var(--transition);
         }
 
         .nav-links a:hover {
             color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
+            text-shadow: 0 0 8px var(--primary);
         }
 
         /* ========================================
@@ -112,416 +113,403 @@
         ========================================
         */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 100px 20px;
+            padding: 20px;
             text-align: center;
         }
 
-        .glitch-wrapper {
-            position: relative;
+        .hero-tag {
+            font-family: monospace;
+            color: var(--primary);
+            background: rgba(0, 242, 254, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(0, 242, 254, 0.4); }
+            100% { box-shadow: 0 0 0 15px rgba(0, 242, 254, 0); }
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 12vw, 7rem);
+            font-size: clamp(3rem, 12vw, 6.5rem);
             font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 20px;
+            line-height: 0.85;
+            margin-bottom: 25px;
             text-transform: uppercase;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
         }
 
         .hero p {
-            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-size: clamp(1rem, 4vw, 1.25rem);
             color: var(--text-dim);
-            max-width: 700px;
+            max-width: 650px;
             margin-bottom: 40px;
         }
 
         /* ========================================
-        5. CALL TO ACTION (CTA)
+        5. BUTTONS & ACTIONS
         ========================================
         */
-        .cta-container {
+        .btn-group {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .btn {
-            position: relative;
-            padding: 18px 45px;
+            padding: 18px 40px;
             border-radius: 12px;
             font-size: 1rem;
             font-weight: 700;
-            text-transform: uppercase;
             text-decoration: none;
             transition: var(--transition);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
+            text-transform: uppercase;
         }
 
-        .btn-primary {
+        .btn-main {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: #000;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.6);
+        .btn-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.5);
         }
 
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+        .btn-outline {
+            border: 2px solid var(--border-glow);
+            color: #fff;
+            backdrop-filter: blur(10px);
         }
 
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: #000;
+        .btn-outline:hover {
+            background: white;
+            color: black;
         }
 
         /* ========================================
-        6. STATS / FEATURES SECTION
+        6. FEATURE GRID
         ========================================
         */
-        .section-padding {
+        .section {
             padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .grid-container {
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            gap: 25px;
         }
 
-        .feature-card {
+        .card {
             background: var(--bg-card);
-            border: 1px solid var(--border-glow);
             padding: 40px;
-            border-radius: 24px;
+            border-radius: 25px;
+            border: 1px solid var(--border-glow);
             backdrop-filter: blur(10px);
             transition: var(--transition);
         }
 
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
+        .card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--primary);
             transform: translateY(-10px);
         }
 
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 242, 254, 0.1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+        .card h3 {
             color: var(--primary);
+            margin-bottom: 15px;
             font-size: 1.5rem;
         }
 
         /* ========================================
-        7. MOBILE OPTIMIZATION (CSE FOCUS)
+        7. FAQ ACCORDION (MOBILE SPECIAL)
         ========================================
         */
-        @media (max-width: 768px) {
-            nav {
-                height: 60px;
-                padding: 0 20px;
-            }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-            .nav-links {
-                display: none; /* Mobile menu logic added in JS */
-            }
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-glow);
+            overflow: hidden;
+        }
 
-            .hero h1 {
-                font-size: 3.5rem;
-            }
+        .faq-header {
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: 0.3s;
+        }
 
-            .feature-card {
-                padding: 25px;
-            }
+        .faq-header:hover { background: rgba(0, 242, 254, 0.05); }
 
-            .cta-container .btn {
-                width: 100%;
-            }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 300px;
+            padding: 22px;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .faq-item.active .faq-header {
+            color: var(--primary);
         }
 
         /* ========================================
-        8. DECORATIVE ELEMENTS
+        8. FOOTER & UTILS
         ========================================
         */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            width: 30px;
-            height: 50px;
-            border: 2px solid var(--text-dim);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
+        footer {
+            padding: 80px 5%;
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+            margin-top: 50px;
         }
 
-        .scroll-indicator::after {
+        .social-links {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3.5rem; }
+            .section { padding: 60px 20px; }
+            .btn { width: 100%; }
+        }
+
+        /* Custom Scroll Indicator */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 45px;
+            border: 2px solid var(--text-dim);
+            border-radius: 20px;
+        }
+        .scroll-down::before {
             content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
             width: 4px;
             height: 8px;
             background: var(--primary);
-            margin-top: 10px;
+            margin-left: -2px;
             border-radius: 2px;
-            animation: scrollMove 2s infinite;
+            animation: scroll-anim 2s infinite;
         }
-
-        @keyframes scrollMove {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(20px); opacity: 0; }
+        @keyframes scroll-anim {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
         }
-
-        .floating-ui {
-            position: absolute;
-            top: 20%;
-            right: 5%;
-            font-family: monospace;
-            color: var(--primary);
-            font-size: 0.7rem;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
     </style>
 </head>
 <body>
 
-    <canvas id="hero-canvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
     <nav>
         <div class="logo">HACKER_GENESIS</div>
         <div class="nav-links">
-            <a href="#about">SYSTEM</a>
-            <a href="#tracks">TRACKS</a>
-            <a href="#prizes">REWARDS</a>
+            <a href="#about">About</a>
+            <a href="#tracks">Tracks</a>
             <a href="#faq">FAQ</a>
         </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">JOIN_TERMINAL</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-main" style="padding: 10px 20px; font-size: 0.8rem;">Register</a>
     </nav>
 
-    <main>
-        <section class="hero">
-            <div class="floating-ui">
-                [SYSTEM_STATUS: ACTIVE]<br>
-                [LATENCY: 14ms]<br>
-                [UPTIME: 99.99%]
-            </div>
-            
-            <div class="glitch-wrapper">
-                <h1>HACKER<br><span style="color: var(--primary)">GENESIS</span></h1>
-            </div>
-            
-            <p>A high-octane 48-hour development challenge where the brightest minds in CSE build the future of decentralized tech.</p>
-            
-            <div class="cta-container">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-primary">Initialise Entry</a>
-                <a href="#tracks" class="btn btn-secondary">View Tracks</a>
-            </div>
+    <section class="hero">
+        <div class="hero-tag">V.2026 // LIVE_REGISTRATION</div>
+        <h1>DECODE THE<br><span style="color: var(--primary)">FUTURE.</span></h1>
+        <p>The ultimate 48-hour sprint for Computer Science engineers, hackers, and creators to build the next generation of decentralized tools.</p>
+        
+        <div class="btn-group">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-main" target="_blank">Initialise Access</a>
+            <a href="#tracks" class="btn btn-outline">Explore Tracks</a>
+        </div>
 
-            <div class="scroll-indicator"></div>
-        </section>
+        <div class="scroll-down"></div>
+    </section>
 
-        <section id="about" class="section-padding">
-            <h2 style="font-size: 2.5rem; text-align: center;">EXECUTION_PARAMETERS</h2>
-            <div class="grid-container">
-                <div class="feature-card">
-                    <div class="icon-box">01</div>
-                    <h3>NEURAL NETWORK</h3>
-                    <p>Collaborate with a global community of developers using AI-driven matching systems.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon-box">02</div>
-                    <h3>QUANTUM PRIZES</h3>
-                    <p>$50,000+ in rewards, cloud credits, and exclusive developer hardware for winners.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon-box">03</div>
-                    <h3>ROOT ACCESS</h3>
-                    <p>Direct mentorship from lead engineers at Google, AWS, and NVIDIA.</p>
-                </div>
+    <section id="about" class="section">
+        <h2 class="section-title">CORE_MODULES</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>01. AI / ML</h3>
+                <p>Develop neural architectures that solve real-world automation challenges using the latest LLM frameworks.</p>
             </div>
-        </section>
+            <div class="card">
+                <h3>02. WEB3</h3>
+                <p>Build trustless applications, smart contracts, and decentralized finance protocols on the edge.</p>
+            </div>
+            <div class="card">
+                <h3>03. CYBER</h3>
+                <p>Advanced penetration testing challenges and zero-knowledge proof implementations.</p>
+            </div>
+        </div>
+    </section>
 
-        <section id="tracks" class="section-padding" style="background: rgba(0,0,0,0.3)">
-             <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 30px;">CHOOSE_YOUR_PATH</h2>
-                <div class="grid-container">
-                    <div class="feature-card" style="border-left: 4px solid var(--accent);">
-                        <h3>Cyber Security</h3>
-                        <p>Penetration testing and zero-knowledge proofs.</p>
-                    </div>
-                    <div class="feature-card" style="border-left: 4px solid var(--primary);">
-                        <h3>Web3 & DeFi</h3>
-                        <p>Building the next generation of financial autonomy.</p>
-                    </div>
-                    <div class="feature-card" style="border-left: 4px solid var(--secondary);">
-                        <h3>Generative AI</h3>
-                        <p>Pushing the boundaries of LLMs and neural vision.</p>
-                    </div>
-                </div>
-             </div>
-        </section>
-    </main>
+    <section id="faq" class="section">
+        <h2 class="section-title">QUERY_LOGS</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-header">Who is eligible for HackerGenesis? <span>+</span></div>
+                <div class="faq-content">Any university student or independent developer with a passion for CSE and problem-solving. Teams of 1-4 are allowed.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-header">What is the registration cost? <span>+</span></div>
+                <div class="faq-content">Access is completely free. We provide the infrastructure, APIs, and food (for in-person) - you provide the innovation.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-header">Can I submit an existing project? <span>+</span></div>
+                <div class="faq-content">No. All code must be written during the 48-hour event window. Open source libraries are allowed, but the core logic must be fresh.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-header">Are there hardware requirements? <span>+</span></div>
+                <div class="faq-content">A laptop and a charger are all you need. We provide cloud credits for high-compute tasks like model training.</div>
+            </div>
+        </div>
+    </section>
 
-    <footer style="padding: 50px 5%; border-top: 1px solid var(--border-glow); text-align: center;">
+    <footer>
         <div class="logo" style="margin-bottom: 20px;">HACKER_GENESIS</div>
-        <p style="color: var(--text-dim); font-size: 0.8rem;">&copy; 2026. All rights reserved. Access authorized only for Genesis Members.</p>
+        <p style="color: var(--text-dim);">&copy; 2026 | Built for the Global Hackathon Community</p>
+        <p style="font-size: 0.7rem; color: #444; margin-top: 10px;">ROOT_ACCESS_GRANTED</p>
     </footer>
 
     <script>
-        /**
-         * HACKER GENESIS - CORE SCRIPT
-         * 1. Canvas Neural Network Visualization
-         * 2. Scroll Animations
-         * 3. Mobile Event Handling
-         */
-
-        const canvas = document.getElementById('hero-canvas');
+        // 1. DYNAMIC NEURAL NET VISUALIZATION
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouse = { x: null, y: null, radius: 150 };
+        let mouse = { x: null, y: null, radius: 100 };
 
-        window.addEventListener('mousemove', function(event) {
-            mouse.x = event.x;
-            mouse.y = event.y;
+        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('resize', () => { 
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight; 
+            init(); 
         });
 
-        // Resize handler
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init();
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        // Particle Object
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
             }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-
             update() {
-                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
                 // Mouse interaction
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                if (distance < mouse.radius) {
-                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
-                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
-                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
-                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < mouse.radius) {
+                    this.x -= dx/20;
+                    this.y -= dy/20;
                 }
-
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 242, 254, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                ctx.fill();
             }
         }
 
         function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
             particles = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            // Adjust density for mobile
-            if (window.innerWidth < 768) numberOfParticles /= 2;
-
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 2) - 1;
-                let directionY = (Math.random() * 2) - 1;
-                let color = 'rgba(0, 242, 254, 0.3)';
-
-                particles.push(new Particle(x, y, directionX, directionY, size, color));
-            }
+            const count = (canvas.width * canvas.height) / 12000;
+            for(let i=0; i<count; i++) particles.push(new Particle());
         }
 
-        function connect() {
-            let opacityValue = 1;
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a; b < particles.length; b++) {
-                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
-                                 + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-                    
-                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
-                        ctx.strokeStyle = `rgba(79, 172, 254, ${opacityValue})`;
-                        ctx.lineWidth = 1;
+        function animate() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            for(let i=0; i<particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for(let j=i; j<particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 120) {
+                        ctx.strokeStyle = `rgba(79, 172, 254, ${1 - dist/120})`;
+                        ctx.lineWidth = 0.5;
                         ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
                     }
                 }
             }
-        }
-
-        function animate() {
             requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-            }
-            connect();
         }
 
-        animate();
-
-        // Smooth Appearance on Scroll
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
+        // 2. FAQ INTERACTION
+        document.querySelectorAll('.faq-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!wasActive) item.classList.add('active');
+                
+                // Haptic feedback for mobile
+                if (window.navigator.vibrate) window.navigator.vibrate(5);
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card').forEach(el => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(30px)";
-            el.style.transition = "all 0.6s ease-out";
-            observer.observe(el);
         });
 
-        // Log for CSE community
-        console.log("%c HACKER_GENESIS_SYSTEM_LOADED ", "background: #00f2fe; color: #000; font-weight: bold;");
+        // 3. START ENGINE
+        init();
+        animate();
+
+        console.log("%c HACKER_GENESIS_INITIALISED ", "color: #00f2fe; background: #111; font-weight: bold; padding: 10px; border-radius: 5px;");
     </script>
 </body>
 </html>
