@@ -3,183 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HackerGenesis 2.0 | Elite Command</title>
+    <title>HackerGenesis | The Final Frontier</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
     <style>
         /* ========================================
-        1. THEME & CORE (ULTRA-MODERN)
+        1. GLOBAL DESIGN SYSTEM
         ======================================== */
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
             --accent: #f093fb;
-            --bg-dark: #020204;
-            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg: #030305;
+            --card-bg: rgba(255, 255, 255, 0.03);
             --border: rgba(0, 242, 254, 0.2);
-            --text-main: #ffffff;
-            --text-dim: #888;
-            --glow: 0 0 15px rgba(0, 242, 254, 0.4);
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --glow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-dark); color: white; overflow-x: hidden; }
-
-        /* ========================================
-        2. BACKGROUND & MATRIX EFFECT
-        ======================================== */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -2; width: 100%; height: 100%; opacity: 0.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
-        .hero::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, var(--bg-dark)); z-index: -1;
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
         /* ========================================
-        3. DYNAMIC NAVIGATION
+        2. VISUALIZATION CANVAS
+        ======================================== */
+        #hero-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.7;
+            background: radial-gradient(circle at 50% 50%, #111827 0%, #030305 100%);
+        }
+
+        /* ========================================
+        3. NAVIGATION
         ======================================== */
         nav {
             position: fixed; top: 0; width: 100%; height: 80px; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; background: rgba(2, 2, 4, 0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            padding: 0 5%; background: rgba(3, 3, 5, 0.7);
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: -1px; color: var(--primary); text-shadow: var(--glow); }
+        .logo {
+            font-weight: 700; font-size: 1.5rem; letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--text-dim); text-decoration: none; margin-left: 30px;
+            font-size: 0.9rem; font-weight: 500; transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--primary); text-shadow: var(--glow); }
 
         /* ========================================
-        4. HERO & LIVE DASHBOARD
+        4. HERO SECTION
         ======================================== */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
-        
-        .live-stats {
-            display: flex; gap: 20px; margin-bottom: 30px; padding: 10px 20px;
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px;
-            font-family: monospace; font-size: 0.8rem; backdrop-filter: blur(10px);
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 120px 20px;
+            text-align: center;
         }
 
-        .stat-item span { color: var(--primary); font-weight: bold; }
+        .badge {
+            background: rgba(0, 242, 254, 0.1); border: 1px solid var(--primary);
+            color: var(--primary); padding: 6px 16px; border-radius: 100px;
+            font-size: 0.75rem; font-family: var(--font-mono); margin-bottom: 24px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
 
-        .hero h1 { font-size: clamp(3.5rem, 15vw, 8rem); line-height: 0.8; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; }
-        
+        .hero h1 {
+            font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 700;
+            line-height: 0.9; letter-spacing: -4px; margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.2));
+        }
+
+        .hero p {
+            color: var(--text-dim); max-width: 600px; font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
         /* ========================================
-        5. INTERACTIVE TERMINAL (GOD FEATURE)
+        5. INTERACTIVE TERMINAL
         ======================================== */
-        .terminal-container {
-            width: 90%; max-width: 700px; background: #000; border-radius: 10px;
-            border: 1px solid #333; overflow: hidden; margin: 50px auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        .terminal {
+            width: 95%; max-width: 800px; background: #000; border-radius: 12px;
+            border: 1px solid #1e293b; overflow: hidden; margin-top: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .terminal-header { background: #1a1a1a; padding: 10px; display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .term-header {
+            background: #0f172a; padding: 12px 20px; display: flex;
+            align-items: center; gap: 8px; border-bottom: 1px solid #1e293b;
+        }
+
+        .term-dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
 
-        .terminal-body { padding: 20px; font-family: 'Courier New', monospace; font-size: 0.9rem; color: #0f0; text-align: left; height: 250px; overflow-y: auto; }
-        .input-line { display: flex; gap: 10px; align-items: center; }
-        input { background: transparent; border: none; color: #fff; outline: none; flex: 1; font-family: inherit; }
+        .term-body {
+            height: 300px; padding: 20px; font-family: var(--font-mono);
+            font-size: 0.85rem; color: #10b981; overflow-y: auto; text-align: left;
+        }
+
+        .term-input-row {
+            display: flex; gap: 8px; align-items: center; padding: 0 20px 20px;
+            font-family: var(--font-mono); font-size: 0.85rem;
+        }
+
+        #cmd-input {
+            background: transparent; border: none; outline: none;
+            color: #fff; flex: 1;
+        }
 
         /* ========================================
-        6. TIMELINE ROADMAP
+        6. FEATURE CARDS
         ======================================== */
-        .timeline { position: relative; max-width: 800px; margin: 100px auto; padding: 0 20px; }
-        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--border); top: 0; bottom: 0; left: 50%; }
+        .section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+        
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 3rem; letter-spacing: -2px; }
 
-        .event { padding: 20px 40px; position: relative; width: 50%; }
-        .left { left: 0; text-align: right; } .right { left: 50%; text-align: left; }
-        .event::after { content: ''; position: absolute; width: 16px; height: 16px; right: -8px; background: var(--primary); border: 4px solid var(--bg-dark); top: 25px; border-radius: 50%; z-index: 1; }
-        .right::after { left: -8px; }
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 40px; border-radius: 24px; backdrop-filter: blur(10px);
+            transition: 0.4s; position: relative; overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card-num {
+            position: absolute; top: -10px; right: 10px; font-size: 5rem;
+            font-weight: 800; opacity: 0.05; color: var(--primary);
+        }
 
         /* ========================================
-        7. FLOATING ACTION BUTTON (FAB)
+        7. NEON FAQ
         ======================================== */
+        .faq-item {
+            margin-bottom: 12px; border: 1px solid var(--border);
+            border-radius: 16px; background: rgba(0,0,0,0.3); transition: 0.3s;
+        }
+
+        .faq-trigger {
+            width: 100%; padding: 24px; border: none; background: transparent;
+            color: #fff; text-align: left; font-size: 1.1rem; font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-content {
+            max-height: 0; overflow: hidden; transition: all 0.4s ease;
+            padding: 0 24px; color: var(--text-dim);
+        }
+
+        .faq-item.active { border-color: var(--primary); box-shadow: var(--glow); }
+        .faq-item.active .faq-content { max-height: 200px; padding-bottom: 24px; }
+
+        /* ========================================
+        8. BUTTONS & FAB
+        ======================================== */
+        .btn-main {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #000; padding: 18px 48px; border-radius: 14px;
+            font-weight: 700; text-decoration: none; display: inline-block;
+            transition: 0.3s; box-shadow: 0 10px 25px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 15px 35px rgba(0, 242, 254, 0.5); }
+
         .fab {
             position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.5); z-index: 9999;
-            text-decoration: none; color: black; font-weight: bold; font-size: 0.7rem;
-            text-align: center; border: 3px solid rgba(255,255,255,0.2); transition: 0.3s;
+            background: var(--primary); border-radius: 50%; z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--glow); transition: 0.3s; text-decoration: none;
+            color: #000; font-weight: 800; text-align: center; font-size: 0.7rem;
         }
-        .fab:hover { transform: scale(1.1) rotate(10deg); }
 
         /* ========================================
-        8. MOBILE ADAPTATIONS
+        9. MOBILE ADAPTATION
         ======================================== */
         @media (max-width: 768px) {
-            .timeline::after { left: 31px; }
-            .event { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left; }
-            .event::after { left: 23px; }
-            .left { left: 0; }
+            .nav-links { display: none; }
             .hero h1 { font-size: 4rem; }
+            .section { padding: 80px 24px; }
+            .terminal { height: 450px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="hero-canvas"></canvas>
 
     <nav>
         <div class="logo">HACKER_GENESIS</div>
-        <div class="nav-links" id="desktop-nav">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" 
-               style="padding: 12px 25px; background: var(--primary); color: black; border-radius: 8px; font-weight: bold; text-decoration: none;">JOIN_NOW</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#tracks">Tracks</a>
+            <a href="#faq">FAQ</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div class="live-stats">
-            <div class="stat-item">NODES_ONLINE: <span id="user-count">482</span></div>
-            <div class="stat-item">PRIZE_POOL: <span>$50,000</span></div>
-        </div>
-        <h1>HACK THE <br><span style="color: var(--primary); text-shadow: var(--glow);">SYSTEM</span></h1>
-        <p>A global CSE nexus for innovators, architects, and visionaries.</p>
+        <div class="badge">Registration v2.6 // Open</div>
+        <h1>GENESIS<br><span style="color: var(--primary)">OF CODE.</span></h1>
+        <p>48 Hours. Infinite Possibilities. Join the world's most elite Computer Science assembly to build the future.</p>
         
-        <div class="terminal-container">
-            <div class="terminal-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn-main">INITIALIZE_ENTRY</a>
+
+        <div class="terminal">
+            <div class="term-header">
+                <div class="term-dot red"></div>
+                <div class="term-dot yellow"></div>
+                <div class="term-dot green"></div>
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: #475569; margin-left: 10px;">bash — 80x24</span>
             </div>
-            <div class="terminal-body" id="terminal-out">
-                <div>[SYSTEM] HackerGenesis Command Center v2.0...</div>
-                <div>[SYSTEM] Type 'help' to see available commands.</div>
+            <div class="term-body" id="term-output">
+                <div>[SYSTEM] Booting HackerGenesis kernel...</div>
+                <div>[SYSTEM] Memory Check: 64GB DDR5 OK</div>
+                <div>[SYSTEM] Network: Encrypted Tunnel Established</div>
+                <div>[SYSTEM] Type 'help' to begin.</div>
             </div>
-            <div style="padding: 0 20px 20px 20px;">
-                <div class="input-line">
-                    <span>user@genesis:~$</span>
-                    <input type="text" id="terminal-input" autofocus autocomplete="off">
-                </div>
+            <div class="term-input-row">
+                <span style="color: var(--primary)">guest@genesis:~$</span>
+                <input type="text" id="cmd-input" autofocus autocomplete="off">
             </div>
         </div>
     </section>
 
-    <section class="section">
-        <h2 style="text-align: center; font-size: 3rem; margin: 100px 0 50px;">EXECUTION_PLAN</h2>
-        <div class="timeline">
-            <div class="event left">
-                <h3>01. INITIALIZATION</h3>
-                <p>Day 1: Opening Ceremony & Keynote Speeches.</p>
+    <section id="about" class="section">
+        <div class="section-header">
+            <h2>SYSTEM_TRACKS</h2>
+            <p style="color: var(--text-dim)">Specialized paths for every architect</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-num">01</div>
+                <h3>NEURAL_NETS</h3>
+                <p>Push the boundaries of Generative AI and LLM orchestration. Build agents that think.</p>
             </div>
-            <div class="event right">
-                <h3>02. SPRINT_01</h3>
-                <p>Day 1: Coding begins. Mentor sessions active.</p>
+            <div class="card">
+                <div class="card-num">02</div>
+                <h3>D-APPS</h3>
+                <p>Architect decentralized solutions for a trustless world using Web3 and Smart Contracts.</p>
             </div>
-            <div class="event left">
-                <h3>03. MIDNIGHT_CRUNCH</h3>
-                <p>Day 2: Special mini-challenges and pizza drops.</p>
-            </div>
-            <div class="event right">
-                <h3>04. DEPLOYMENT</h3>
-                <p>Day 3: Final submissions and project demos.</p>
+            <div class="card">
+                <h3>CYBER_SHIELD</h3>
+                <p>Solve high-stakes security vulnerabilities and implement Zero-Knowledge Proofs.</p>
             </div>
         </div>
     </section>
 
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="fab">
-        APPLY<br>NOW
-    </a>
+    <section id="faq" class="section">
+        <div class="section-header">
+            <h2>QUERY_LOGS</h2>
+        </div>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="faq-item">
+                <button class="faq-trigger">What is HackerGenesis? <span>+</span></button>
+                <div class="faq-content">A high-octane 48-hour hackathon designed for serious developers to collaborate on game-changing technology.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger">Is it beginner friendly? <span>+</span></button>
+                <div class="faq-content">While we focus on technical depth, we have dedicated mentors to help students of all levels level up their skills.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger">Is participation free? <span>+</span></button>
+                <div class="faq-content">Absolutely. HackerGenesis is free for all accepted participants, including swags and resources.</div>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="fab">APPLY<br>NOW</a>
 
     <script>
-        /* 1. VISUALIZATION ENGINE */
-        const canvas = document.getElementById('bg-canvas');
+        /* --- 1. NEURAL BACKGROUND ENGINE --- */
+        const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
@@ -187,60 +306,85 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<80; i++) particles.push({
-                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2, size: Math.random()*2
-            });
+            const count = window.innerWidth < 768 ? 40 : 100;
+            for(let i=0; i<count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5,
+                    size: Math.random() * 2
+                });
+            }
         }
 
-        function draw() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00f2fe";
-            particles.forEach(p => {
+            ctx.strokeStyle = "rgba(0, 242, 254, 0.15)";
+            
+            particles.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy;
                 if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+
+                for(let j=i+1; j<particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animate);
         }
-        init(); draw();
 
-        /* 2. TERMINAL LOGIC */
-        const termInput = document.getElementById('terminal-input');
-        const termOut = document.getElementById('terminal-out');
+        /* --- 2. TERMINAL CONTROLLER --- */
+        const input = document.getElementById('cmd-input');
+        const output = document.getElementById('term-output');
 
-        termInput.addEventListener('keydown', (e) => {
+        input.addEventListener('keydown', (e) => {
             if(e.key === 'Enter') {
-                const cmd = termInput.value.toLowerCase();
-                const line = document.createElement('div');
-                line.style.color = "#888";
-                line.textContent = `> ${cmd}`;
-                termOut.appendChild(line);
+                const val = input.value.toLowerCase();
+                const userLine = document.createElement('div');
+                userLine.innerHTML = `<span style="color:#fff">> ${val}</span>`;
+                output.appendChild(userLine);
 
-                let response = "";
-                if(cmd === 'help') response = "Commands: status, date, location, registration, clear";
-                else if(cmd === 'status') response = "SYSTEM: ALL MODULES NOMINAL. 482 USERS READY.";
-                else if(cmd === 'date') response = "Genesis Event: October 24, 2026";
-                else if(cmd === 'location') response = "CYBERSPACE / Virtual Global Access";
-                else if(cmd === 'registration') response = "LINK: https://docs.google.com/forms/... (See apply button)";
-                else if(cmd === 'clear') { termOut.innerHTML = ""; response = "Console cleared."; }
-                else response = `Command not found: ${cmd}`;
+                let res = "";
+                if(val === 'help') res = "Available: status, tracks, prizes, apply, clear";
+                else if(val === 'status') res = "NODE_GENESIS: ACTIVE. LATENCY: 12ms. SLOTS: 24 LEFT.";
+                else if(val === 'tracks') res = "AI/ML, WEB3, CYBER_SEC, CLOUD_INFRA";
+                else if(val === 'apply') res = "Opening secure link... [REDIRECTING TO GOOGLE FORMS]";
+                else if(val === 'clear') { output.innerHTML = ""; res = "Buffer cleared."; }
+                else res = "Error: Unknown command. Type 'help'.";
 
                 const resLine = document.createElement('div');
-                resLine.textContent = response;
-                termOut.appendChild(resLine);
-                termInput.value = "";
-                termOut.scrollTop = termOut.scrollHeight;
+                resLine.textContent = res;
+                output.appendChild(resLine);
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+                
+                if(val === 'apply') setTimeout(() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog', '_blank'), 1000);
             }
         });
 
-        /* 3. LIVE COUNTER SIMULATION */
-        setInterval(() => {
-            const count = document.getElementById('user-count');
-            let current = parseInt(count.innerText);
-            count.innerText = current + Math.floor(Math.random() * 3);
-        }, 3000);
+        /* --- 3. FAQ ACCORDION --- */
+        document.querySelectorAll('.faq-trigger').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        init(); animate();
+        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
