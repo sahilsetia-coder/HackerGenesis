@@ -2,545 +2,526 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackerGenesis | The Ultimate Hackathon Community</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HackerGenesis | Transcend Reality</title>
     
+    <meta name="description" content="HackerGenesis: The ultimate hackathon for the next generation of innovators.">
+    <meta name="theme-color" content="#0a0a0c">
+
     <style>
-        /* --- Core Variables & Hacker Theme --- */
+        /* ========================================
+        1. CSS VARIABLES & CORE SETUP
+        ========================================
+        */
         :root {
-            --bg-main: #050505;
-            --bg-surface: #121212;
-            --terminal-green: #00ff41;
-            --terminal-green-glow: rgba(0, 255, 65, 0.4);
-            --cyber-purple: #bd00ff;
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #f093fb;
+            --bg-dark: #050507;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-glow: rgba(0, 242, 254, 0.3);
             --text-main: #e0e0e0;
-            --text-muted: #888888;
-            --font-mono: 'Space Mono', monospace;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --text-dim: #a0a0a0;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
             scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--bg-dark);
         }
 
         body {
-            background-color: var(--bg-main);
+            background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: var(--font-mono);
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, transparent 70%);
+            line-height: 1.6;
         }
 
-        /* --- Scrollbar Styling --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--terminal-green); }
-
-        /* --- Navigation --- */
-        nav {
+        /* ========================================
+        2. BACKGROUND VISUALIZATION (CANVAS)
+        ========================================
+        */
+        #hero-canvas {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .logo i { color: var(--terminal-green); }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a:hover { color: var(--terminal-green); }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--terminal-green);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after { width: 100%; }
-
-        /* --- Buttons --- */
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 0px; /* Sharp edges for cyberpunk feel */
-            cursor: pointer;
-            transition: var(--transition);
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-neon {
-            background: transparent;
-            color: var(--terminal-green);
-            border: 2px solid var(--terminal-green);
-            box-shadow: 0 0 10px var(--terminal-green-glow) inset, 0 0 10px var(--terminal-green-glow);
-        }
-
-        .btn-neon:hover {
-            background: var(--terminal-green);
-            color: var(--bg-main);
-            box-shadow: 0 0 20px var(--terminal-green), 0 0 40px var(--terminal-green);
-        }
-
-        .btn-purple {
-            background: transparent;
-            color: var(--cyber-purple);
-            border: 2px solid var(--cyber-purple);
-        }
-
-        .btn-purple:hover {
-            background: var(--cyber-purple);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(189, 0, 255, 0.5);
-        }
-
-        /* --- Hero Section & Glitch Effect --- */
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0 10vw;
-            position: relative;
-        }
-
-        /* Grid Background Pattern */
-        .grid-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
-        }
-
-        .glitch-wrapper {
-            font-size: 5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            position: relative;
-            color: #fff;
-            text-transform: uppercase;
-        }
-
-        .glitch {
-            position: relative;
-        }
-
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-main);
+            z-index: -1;
+            background: radial-gradient(circle at center, #111 0%, #050507 100%);
         }
 
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 red;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+        /* ========================================
+        3. NAVIGATION
+        ========================================
+        */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            background: rgba(5, 5, 7, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 var(--terminal-green);
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
         }
 
-        @keyframes glitch-anim {
-            0% { clip: rect(13px, 9999px, 86px, 0); }
-            5% { clip: rect(74px, 9999px, 8px, 0); }
-            10% { clip: rect(18px, 9999px, 54px, 0); }
-            15.0% { clip: rect(81px, 9999px, 35px, 0); }
-            20% { clip: rect(10px, 9999px, 46px, 0); }
-            25% { clip: rect(85px, 9999px, 20px, 0); }
-            30.0% { clip: rect(24px, 9999px, 96px, 0); }
-            35% { clip: rect(54px, 9999px, 60px, 0); }
-            40% { clip: rect(12px, 9999px, 39px, 0); }
-            45% { clip: rect(98px, 9999px, 73px, 0); }
-            50% { clip: rect(31px, 9999px, 14px, 0); }
-            55.0% { clip: rect(6px, 9999px, 83px, 0); }
-            60.0% { clip: rect(41px, 9999px, 59px, 0); }
-            65% { clip: rect(82px, 9999px, 11px, 0); }
-            70% { clip: rect(51px, 9999px, 45px, 0); }
-            75% { clip: rect(19px, 9999px, 72px, 0); }
-            80% { clip: rect(96px, 9999px, 26px, 0); }
-            85.0% { clip: rect(37px, 9999px, 88px, 0); }
-            90% { clip: rect(63px, 9999px, 50px, 0); }
-            95% { clip: rect(2px, 9999px, 94px, 0); }
-            100% { clip: rect(75px, 9999px, 32px, 0); }
-        }
-        @keyframes glitch-anim2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            5% { clip: rect(52px, 9999px, 74px, 0); }
-            10% { clip: rect(79px, 9999px, 85px, 0); }
-            15.0% { clip: rect(75px, 9999px, 5px, 0); }
-            20% { clip: rect(67px, 9999px, 61px, 0); }
-            25% { clip: rect(14px, 9999px, 79px, 0); }
-            30.0% { clip: rect(1px, 9999px, 66px, 0); }
-            35% { clip: rect(86px, 9999px, 30px, 0); }
-            40% { clip: rect(23px, 9999px, 98px, 0); }
-            45% { clip: rect(85px, 9999px, 72px, 0); }
-            50% { clip: rect(71px, 9999px, 75px, 0); }
-            55.0% { clip: rect(2px, 9999px, 48px, 0); }
-            60.0% { clip: rect(30px, 9999px, 16px, 0); }
-            65% { clip: rect(59px, 9999px, 50px, 0); }
-            70% { clip: rect(41px, 9999px, 62px, 0); }
-            75% { clip: rect(2px, 9999px, 82px, 0); }
-            80% { clip: rect(47px, 9999px, 73px, 0); }
-            85.0% { clip: rect(3px, 9999px, 27px, 0); }
-            90% { clip: rect(26px, 9999px, 55px, 0); }
-            95% { clip: rect(42px, 9999px, 97px, 0); }
-            100% { clip: rect(38px, 9999px, 49px, 0); }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
 
-        .terminal-text {
-            font-size: 1.2rem;
-            color: var(--text-muted);
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* ========================================
+        4. HERO SECTION
+        ========================================
+        */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 12vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            color: var(--text-dim);
+            max-width: 700px;
             margin-bottom: 40px;
-            max-width: 600px;
-            min-height: 60px; /* Prevents layout shift during typing */
         }
 
-        .terminal-text span {
-            color: var(--terminal-green);
-        }
-        
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2rem;
-            background-color: var(--terminal-green);
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 5px;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .hero-buttons {
+        /* ========================================
+        5. CALL TO ACTION (CTA)
+        ========================================
+        */
+        .cta-container {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* --- Sections Shared --- */
-        section {
-            padding: 100px 10vw;
+        .btn {
             position: relative;
-        }
-
-        .section-header {
-            margin-bottom: 60px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #fff;
+            padding: 18px 45px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
             text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .section-header h2::before {
-            content: '>';
-            color: var(--terminal-green);
-            margin-right: 10px;
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
         }
 
-        /* --- Features/Perks Grid --- */
-        .features-grid {
+        .btn-primary:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* ========================================
+        6. STATS / FEATURES SECTION
+        ========================================
+        */
+        .section-padding {
+            padding: 100px 5%;
+        }
+
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
+            margin-top: 50px;
         }
 
         .feature-card {
-            background: var(--bg-surface);
-            border: 1px solid #222;
-            padding: 40px 30px;
-            position: relative;
-            transition: var(--transition);
-            overflow: hidden;
-        }
-
-        /* Cyberpunk Corner Cut Effect using Clip-path */
-        .feature-card {
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 2px;
-            height: 0%;
-            background: var(--terminal-green);
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
             transition: var(--transition);
         }
 
         .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
             transform: translateY(-10px);
-            border-color: #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background: #181818;
         }
 
-        .feature-card:hover::before { height: 100%; }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--terminal-green);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* --- Stats Terminal Section --- */
-        .terminal-window {
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 5px 5px 0 0;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-        }
-
-        .terminal-header {
-            background: #222;
-            padding: 10px 15px;
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 242, 254, 0.1);
+            border-radius: 15px;
             display: flex;
-            gap: 8px;
-        }
-
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot.red { background: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #27c93f; }
-
-        .terminal-body {
-            padding: 30px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .terminal-line { margin-bottom: 15px; }
-        .cmd { color: var(--terminal-green); }
-        .out { color: #fff; margin-left: 20px; display: block; margin-top: 5px; }
-
-        /* --- Footer --- */
-        footer {
-            border-top: 1px solid #222;
-            padding: 40px 10vw;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            background: #0a0a0a;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .socials a {
-            color: var(--text-muted);
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
             font-size: 1.5rem;
-            margin-left: 20px;
-            transition: var(--transition);
         }
 
-        .socials a:hover { color: var(--terminal-green); transform: translateY(-3px); display: inline-block;}
-
-        /* --- Responsive --- */
+        /* ========================================
+        7. MOBILE OPTIMIZATION (CSE FOCUS)
+        ========================================
+        */
         @media (max-width: 768px) {
-            .glitch-wrapper { font-size: 3rem; }
-            .nav-links { display: none; } /* Hamburger menu needed for mobile in production */
-            .hero-buttons { flex-direction: column; width: 100%; }
-            .btn { text-align: center; }
-            footer { flex-direction: column; text-align: center; }
-            .socials a { margin: 0 10px; }
+            nav {
+                height: 60px;
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none; /* Mobile menu logic added in JS */
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .feature-card {
+                padding: 25px;
+            }
+
+            .cta-container .btn {
+                width: 100%;
+            }
         }
+
+        /* ========================================
+        8. DECORATIVE ELEMENTS
+        ========================================
+        */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--text-dim);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 4px;
+            height: 8px;
+            background: var(--primary);
+            margin-top: 10px;
+            border-radius: 2px;
+            animation: scrollMove 2s infinite;
+        }
+
+        @keyframes scrollMove {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        .floating-ui {
+            position: absolute;
+            top: 20%;
+            right: 5%;
+            font-family: monospace;
+            color: var(--primary);
+            font-size: 0.7rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
     </style>
 </head>
 <body>
 
+    <canvas id="hero-canvas"></canvas>
+
     <nav>
-        <a href="#" class="logo"><i class="fa-solid fa-terminal"></i> HackerGenesis</a>
-        <ul class="nav-links">
-            <li><a href="#about">System_Info</a></li>
-            <li><a href="#perks">Perks</a></li>
-            <li><a href="#community">Network</a></li>
-        </ul>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn btn-neon btn-sm" style="padding: 8px 16px; font-size: 0.8rem;">Initialize_Join</a>
+        <div class="logo">HACKER_GENESIS</div>
+        <div class="nav-links">
+            <a href="#about">SYSTEM</a>
+            <a href="#tracks">TRACKS</a>
+            <a href="#prizes">REWARDS</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">JOIN_TERMINAL</a>
     </nav>
 
-    <section id="hero">
-        <div class="grid-bg"></div>
-        <div class="glitch-wrapper">
-            <div class="glitch" data-text="HackerGenesis">HackerGenesis</div>
-        </div>
-        
-        <div class="terminal-text" id="typewriter-text">
+    <main>
+        <section class="hero">
+            <div class="floating-ui">
+                [SYSTEM_STATUS: ACTIVE]<br>
+                [LATENCY: 14ms]<br>
+                [UPTIME: 99.99%]
+            </div>
+            
+            <div class="glitch-wrapper">
+                <h1>HACKER<br><span style="color: var(--primary)">GENESIS</span></h1>
+            </div>
+            
+            <p>A high-octane 48-hour development challenge where the brightest minds in CSE build the future of decentralized tech.</p>
+            
+            <div class="cta-container">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" class="btn btn-primary">Initialise Entry</a>
+                <a href="#tracks" class="btn btn-secondary">View Tracks</a>
             </div>
 
-        <div class="hero-buttons">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKVAj2BFY-7NDPTKAKF-hXgInacbSbnJiuIXstyAdT5vYykw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn btn-neon">
-                <i class="fa-solid fa-bolt"></i> Register Now
-            </a>
-            <a href="#about" class="btn btn-purple">Explore DB</a>
-        </div>
-    </section>
+            <div class="scroll-indicator"></div>
+        </section>
 
-    <section id="about">
-        <div class="section-header">
-            <h2>System_Info</h2>
-        </div>
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-            </div>
-            <div class="terminal-body">
-                <div class="terminal-line">
-                    <span class="cmd">root@genesis:~$</span> ./describe_community.sh
-                    <span class="out">HackerGenesis is an elite collective of developers, designers, and innovators. We don't just write code; we architect the future. Born from late-night caffeine runs and broken compilers, we host the most intense and rewarding hackathons on the grid.</span>
+        <section id="about" class="section-padding">
+            <h2 style="font-size: 2.5rem; text-align: center;">EXECUTION_PARAMETERS</h2>
+            <div class="grid-container">
+                <div class="feature-card">
+                    <div class="icon-box">01</div>
+                    <h3>NEURAL NETWORK</h3>
+                    <p>Collaborate with a global community of developers using AI-driven matching systems.</p>
                 </div>
-                <div class="terminal-line">
-                    <span class="cmd">root@genesis:~$</span> cat mission_statement.txt
-                    <span class="out">To bridge the gap between abstract ideas and deployable software. To provide mentorship, resources, and a battleground for raw talent to thrive.</span>
+                <div class="feature-card">
+                    <div class="icon-box">02</div>
+                    <h3>QUANTUM PRIZES</h3>
+                    <p>$50,000+ in rewards, cloud credits, and exclusive developer hardware for winners.</p>
                 </div>
-                <div class="terminal-line">
-                    <span class="cmd">root@genesis:~$</span> status
-                    <span class="out" style="color: var(--terminal-green);">SYSTEM ONLINE. READY FOR NEW USERS.</span>
+                <div class="feature-card">
+                    <div class="icon-box">03</div>
+                    <h3>ROOT ACCESS</h3>
+                    <p>Direct mentorship from lead engineers at Google, AWS, and NVIDIA.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="perks">
-        <div class="section-header">
-            <h2>Runtime_Perks</h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-code-branch"></i></div>
-                <h3>Intense Hackathons</h3>
-                <p>Participate in 24, 48, and 72-hour sprints. Solve real-world bounties, push your tech stack to the limit, and build projects that actually matter.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-network-wired"></i></div>
-                <h3>Elite Networking</h3>
-                <p>Connect with a grid of top-tier developers, industry mentors, and angel investors looking for the next big disruptive technology.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-brands fa-aws"></i></div>
-                <h3>Exclusive APIs & Cloud</h3>
-                <p>Get free credits, premium API access, and cloud hosting architecture setups sponsored by our tech partners exclusively for members.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
-                <h3>Bounties & Swag</h3>
-                <p>Win mechanical keyboards, exclusive dark-mode hoodies, tech gadgets, and massive cash pools for winning specific sponsor tracks.</p>
-            </div>
-        </div>
-    </section>
+        <section id="tracks" class="section-padding" style="background: rgba(0,0,0,0.3)">
+             <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 30px;">CHOOSE_YOUR_PATH</h2>
+                <div class="grid-container">
+                    <div class="feature-card" style="border-left: 4px solid var(--accent);">
+                        <h3>Cyber Security</h3>
+                        <p>Penetration testing and zero-knowledge proofs.</p>
+                    </div>
+                    <div class="feature-card" style="border-left: 4px solid var(--primary);">
+                        <h3>Web3 & DeFi</h3>
+                        <p>Building the next generation of financial autonomy.</p>
+                    </div>
+                    <div class="feature-card" style="border-left: 4px solid var(--secondary);">
+                        <h3>Generative AI</h3>
+                        <p>Pushing the boundaries of LLMs and neural vision.</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+    </main>
 
-    <footer>
-        <div>
-            <p style="color: var(--text-muted);">&copy; 2026 HackerGenesis. <span style="color: var(--terminal-green);">[CONNECTION SECURE]</span></p>
-        </div>
-        <div class="socials">
-            <a href="#"><i class="fa-brands fa-github"></i></a>
-            <a href="#"><i class="fa-brands fa-discord"></i></a>
-            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-        </div>
+    <footer style="padding: 50px 5%; border-top: 1px solid var(--border-glow); text-align: center;">
+        <div class="logo" style="margin-bottom: 20px;">HACKER_GENESIS</div>
+        <p style="color: var(--text-dim); font-size: 0.8rem;">&copy; 2026. All rights reserved. Access authorized only for Genesis Members.</p>
     </footer>
 
     <script>
-        // --- Typewriter Effect for Hero Section ---
-        const textElement = document.getElementById('typewriter-text');
-        const textToType = "We are a syndicate of developers. We Build. We Break. We Innovate. Join the network and elevate your stack.";
-        let index = 0;
+        /**
+         * HACKER GENESIS - CORE SCRIPT
+         * 1. Canvas Neural Network Visualization
+         * 2. Scroll Animations
+         * 3. Mobile Event Handling
+         */
 
-        function typeWriter() {
-            if (index < textToType.length) {
-                // Highlight specific words in green
-                let char = textToType.charAt(index);
-                textElement.innerHTML = textToType.substring(0, index + 1).replace(/(Build|Break|Innovate|network)/g, "<span>$1</span>") + '<span class="cursor"></span>';
-                index++;
-                // Randomize typing speed for human feel
-                let typingSpeed = Math.floor(Math.random() * (70 - 30 + 1)) + 30; 
-                setTimeout(typeWriter, typingSpeed);
-            } else {
-                // Keep cursor blinking at the end
-                textElement.innerHTML = textToType.replace(/(Build|Break|Innovate|network)/g, "<span>$1</span>") + '<span class="cursor"></span>';
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Resize handler
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Particle Object
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+
+                // Mouse interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
+                }
+
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
             }
         }
 
-        // Start typing effect slightly after load
-        setTimeout(typeWriter, 1000);
+        function init() {
+            particles = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            // Adjust density for mobile
+            if (window.innerWidth < 768) numberOfParticles /= 2;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 2) - 1;
+                let directionY = (Math.random() * 2) - 1;
+                let color = 'rgba(0, 242, 254, 0.3)';
+
+                particles.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
+                                 + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(79, 172, 254, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+            connect();
+        }
+
+        animate();
+
+        // Smooth Appearance on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(el => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(30px)";
+            el.style.transition = "all 0.6s ease-out";
+            observer.observe(el);
+        });
+
+        // Log for CSE community
+        console.log("%c HACKER_GENESIS_SYSTEM_LOADED ", "background: #00f2fe; color: #000; font-weight: bold;");
     </script>
 </body>
 </html>
